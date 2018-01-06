@@ -135,6 +135,9 @@ public class CalcFlapSz {
      case "0700 Auto Std":
        this.style0700AutoStd(w2);
        break;
+    case "0216 (Envelope Base)":
+       this.style0216();
+       break;   
      } // switch flapstyle
      
   } // *** Style Allowances ***

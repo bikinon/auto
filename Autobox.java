@@ -67,7 +67,12 @@ public class Autobox extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("02xx / 07xx Series Designs");
 
-        stylebtm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0701 Auto Full OL", "0701 Auto Full OL RC", "0700 Auto Std", "0200 (Raw Edge)", "0201 (OFOTB)", "0202 (OFO)", "0203 (OFFO)", "0204 (AFM)", "0205 (IFM)", "0206 (IFM / OFFO)", "0209 (Short Top Flap)", "0209 (Gap Flaps)", "0216 (Envelope Base)" }));
+        stylebtm.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0701 Auto Full OL RC", "0701 Auto Full OL", "0700 Auto Std", "0200 (Raw Edge)", "0201 (OFOTB)", "0202 (OFO)", "0203 (OFFO)", "0204 (AFM)", "0205 (IFM)", "0206 (IFM / OFFO)", "0209 (Short Btm Flap)", "0209 (Gap Flaps)", "0216 (Envelope Base)" }));
+        stylebtm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stylebtmActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Style:");
@@ -106,7 +111,7 @@ public class Autobox extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel4.setText("Flute:");
 
-        cflute.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "E", "B", "C", "EB", "N", "F", "R", "BC" }));
+        cflute.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "E 2mm", "B 3mm", "C 5mm", "D (M, R, S) 2.5mm", "EB 5mm", "F 1mm", "G (N) 0.6mm", "BC 7mm" }));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("File Name:");
@@ -142,12 +147,12 @@ public class Autobox extends javax.swing.JFrame {
         jRadioButton2.setForeground(new java.awt.Color(153, 153, 153));
         jRadioButton2.setText("Width Panel 1st");
 
-        topVal.setText("0");
-        topVal.setVisible(false);
+        topVal.setText("65");
+        topVal.setVisible(true);
 
         jLabelTop.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabelTop.setText("Top OL:");
-        jLabelTop.setVisible(false);
+        jLabelTop.setText("0215+ P&S:");
+        jLabelTop.setVisible(true);
 
         btmVal.setText("0");
         btmVal.setVisible(false);
@@ -217,12 +222,12 @@ public class Autobox extends javax.swing.JFrame {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(cflute, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(49, 49, 49)
+                                        .addComponent(cflute, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtFilePathName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(40, 40, 40)
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(txtFlange, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -315,7 +320,9 @@ public class Autobox extends javax.swing.JFrame {
         double l = Double.parseDouble(lsz.getText());
         double w = Double.parseDouble(wsz.getText());
         double d = Double.parseDouble(dsz.getText());
-
+        String flute = (String) cflute.getSelectedItem();
+        flute = flute.substring(0, 2).trim();
+        
         double sz[] = getIDsizes(l, w, d);
         l = sz[0];
         w = sz[1];
@@ -327,7 +334,7 @@ public class Autobox extends javax.swing.JFrame {
         oDxf.length = l;
         oDxf.width = w;
         oDxf.depth = d;
-        oDxf.flute = (String) cflute.getSelectedItem();
+        oDxf.flute = flute;
         oDxf.flange =  Double.parseDouble(txtFlange.getText());
         oDxf.topStyle = (String) style.getSelectedItem();
         oDxf.btmStyle = (String) stylebtm.getSelectedItem();
@@ -367,8 +374,9 @@ public class Autobox extends javax.swing.JFrame {
         double l = Double.parseDouble(lsz.getText());
         double w = Double.parseDouble(wsz.getText());
         double d = Double.parseDouble(dsz.getText());
-
-        lblBlkSz.setText(cflute.getSelectedItem().toString());
+        String flute = (String) cflute.getSelectedItem();
+        flute = flute.substring(0, 2).trim();
+        lblBlkSz.setText(flute);
 
         double sz[] = getIDsizes(l, w, d);
         l = sz[0];
@@ -379,7 +387,7 @@ public class Autobox extends javax.swing.JFrame {
         oDxf.length = l;
         oDxf.width = w;
         oDxf.depth = d;
-        oDxf.flute = (String) cflute.getSelectedItem();
+        oDxf.flute = flute;
 
         oDxf.topStyle = (String) style.getSelectedItem();
         oDxf.btmStyle = (String) stylebtm.getSelectedItem();
@@ -397,20 +405,87 @@ public class Autobox extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBlkSzActionPerformed
 
     private void styleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_styleActionPerformed
-        // TODO add your handling code here:
+        if(style.getSelectedItem()== "Hammer Head OL") {
+           this.jLabelTop.setText("Hammer OL:");
+           this.jLabelTop.setVisible(true); 
+           this.topVal.setText("25");
+           this.topVal.setVisible(true);    
+        } else if(style.getSelectedItem()== "0202 (OFO)") {
+            this.jLabelTop.setText("Top OL:");
+            this.jLabelTop.setVisible(true); 
+            this.topVal.setText("25");
+            this.topVal.setVisible(true);    
+        } else if(style.getSelectedItem()== "0215+ P&S / Rippa") {
+            this.jLabelTop.setText("0215+ P&S:");
+            this.jLabelTop.setVisible(true); 
+            this.topVal.setText("65");
+            this.topVal.setVisible(true);    
+        } else if(style.getSelectedItem()== "0209 (Short Top Flap)") {
+            this.jLabelTop.setText("Short Flap Sz:");
+            this.jLabelTop.setVisible(true); 
+            this.topVal.setText("30");
+            this.topVal.setVisible(true);    
+        } else if(style.getSelectedItem()== "0209 (Gap Flaps)") {
+            this.jLabelTop.setText("Top Flap Gap:");
+            this.jLabelTop.setVisible(true); 
+            this.topVal.setText("6");
+            this.topVal.setVisible(true);    
+        } else {
+            this.jLabelTop.setText(" ");
+            this.jLabelTop.setVisible(false); 
+            this.topVal.setText("0");
+            this.topVal.setVisible(false);       
+        }
+
     }//GEN-LAST:event_styleActionPerformed
+
+    private void stylebtmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stylebtmActionPerformed
+        if(stylebtm.getSelectedItem()== "0700 Auto Std") {
+           this.jLabelBtm.setText("Btm Lock OL:");
+           this.jLabelBtm.setVisible(true); 
+           this.btmVal.setText("25");
+           this.btmVal.setVisible(true);    
+        } else if(stylebtm.getSelectedItem()== "0202 (OFO)") {
+         this.jLabelBtm.setText("Btm OL:");
+         this.jLabelBtm.setVisible(true); 
+         this.btmVal.setText("25");
+         this.btmVal.setVisible(true);    
+        } else if(stylebtm.getSelectedItem()== "0209 (Short Btm Flap)") {
+         this.jLabelBtm.setText("Short Flap Sz:");
+         this.jLabelBtm.setVisible(true); 
+         this.btmVal.setText("30");
+         this.btmVal.setVisible(true);    
+        } else if(stylebtm.getSelectedItem()== "0209 (Gap Flaps)") {
+         this.jLabelBtm.setText("Btm Flap Gap:");
+         this.jLabelBtm.setVisible(true); 
+         this.btmVal.setText("6");
+         this.btmVal.setVisible(true);    
+        } else if(stylebtm.getSelectedItem()== "0216 (Envelope Base)") {
+         this.jLabelBtm.setText("Btm Lock OL:");
+         this.jLabelBtm.setVisible(true); 
+         this.btmVal.setText("25");
+         this.btmVal.setVisible(true);    
+        } else {
+         this.jLabelBtm.setText(" ");
+         this.jLabelBtm.setVisible(false); 
+         this.btmVal.setText("0");
+         this.btmVal.setVisible(false);       
+        }
+    }//GEN-LAST:event_stylebtmActionPerformed
 
     
       public double[] getIDsizes(double l, double w, double d) { 
     // 0203+/0701+
+    String flute = (String) cflute.getSelectedItem();
+    flute = flute.substring(0, 2).trim();
     if (dimtype.getSelectedItem() == "ID: Internal Dimensions") {
       // Do nothing
     } else if (dimtype.getSelectedItem() == "OD: Outside Dimensions") {
-      if (cflute.getSelectedItem().toString() == "B") {
+      if (flute == "B") {
         l = l - 6;
         w = w - 6;
         d = d - 12;
-      } else if(cflute.getSelectedItem().toString() == "C") {
+      } else if(flute == "C") {
         l = l - 10;
         w = w - 10;
         d = d - 15; 
@@ -420,11 +495,11 @@ public class Autobox extends javax.swing.JFrame {
         d = d - 8;
       } // end of if  
     } else {   // B to B
-      if (cflute.getSelectedItem().toString() == "B") {
+      if (flute == "B") {
         l = l - 3;
         w = w - 3;
         d = d - 6;
-      } else if(cflute.getSelectedItem().toString() == "C") {
+      } else if(flute == "C") {
         l = l - 5;
         w = w - 5;
         d = d - 10; 
@@ -443,86 +518,12 @@ public class Autobox extends javax.swing.JFrame {
   }  // getIDsizes
   
   public void style_ItemStateChanged(ItemEvent evt) {
-//"Hammer Head OL", "0215+ P&S / Rippa", "0202 (OFO)", "0209 (Short Top Flap)", "0209 (Gap Flaps)"
-   if(style.getSelectedItem()== "Hammer Head OL") {
-      this.jLabelTop.setText("Hammer OL:");
-      this.jLabelTop.setVisible(true); 
-      this.topVal.setText("25");
-      this.topVal.setVisible(true);    
-   } else if(style.getSelectedItem()== "0202 (OFO)") {
-    this.jLabelTop.setText("Top OL:");
-    this.jLabelTop.setVisible(true); 
-    this.topVal.setText("25");
-    this.topVal.setVisible(true);    
-   } else if(style.getSelectedItem()== "0215+ P&S / Rippa") {
-    this.jLabelTop.setText("0215+ P&S:");
-    this.jLabelTop.setVisible(true); 
-    this.topVal.setText("65");
-    this.topVal.setVisible(true);    
-   } else if(style.getSelectedItem()== "0209 (Short Top Flap)") {
-    this.jLabelTop.setText("Short Flap Sz:");
-    this.jLabelTop.setVisible(true); 
-    this.topVal.setText("30");
-    this.topVal.setVisible(true);    
-   } else if(style.getSelectedItem()== "0209 (Gap Flaps)") {
-    this.jLabelTop.setText("Top Flap Gap:");
-    this.jLabelTop.setVisible(true); 
-    this.topVal.setText("6");
-    this.topVal.setVisible(true);    
-   } else {
-    this.jLabelTop.setText(" ");
-    this.jLabelTop.setVisible(false); 
-    this.topVal.setText("0");
-    this.topVal.setVisible(false);       
-   }
-
   } // end of style_ItemStateChanged
 
   public void style_ActionPerformed(ActionEvent evt) {
-    String topOL = (String) style.getSelectedItem();
-    if(topOL.equals("Hammer Head OL") || topOL.equals("0202 (OFO)")) {
-        topVal.setVisible(true);
-        
-    }
-    
-    
-
   } // end of style_ActionPerformed
 
   public void stylebtm_ItemStateChanged(ItemEvent evt) {
-// "0700 Auto Std",  "0202 (OFO)", "0209 (Short Btm Flap)", "0209 (Gap Flaps)", "0216 (Envelope Base)"
-   if(stylebtm.getSelectedItem()== "0700 Auto Std") {
-      this.jLabelBtm.setText("Btm Lock OL:");
-      this.jLabelBtm.setVisible(true); 
-      this.btmVal.setText("25");
-      this.btmVal.setVisible(true);    
-   } else if(stylebtm.getSelectedItem()== "0202 (OFO)") {
-    this.jLabelBtm.setText("Btm OL:");
-    this.jLabelBtm.setVisible(true); 
-    this.btmVal.setText("25");
-    this.btmVal.setVisible(true);    
-   } else if(stylebtm.getSelectedItem()== "0209 (Short Btm Flap)") {
-    this.jLabelBtm.setText("Short Flap Sz:");
-    this.jLabelBtm.setVisible(true); 
-    this.btmVal.setText("30");
-    this.btmVal.setVisible(true);    
-   } else if(stylebtm.getSelectedItem()== "0209 (Gap Flaps)") {
-    this.jLabelBtm.setText("Btm Flap Gap:");
-    this.jLabelBtm.setVisible(true); 
-    this.btmVal.setText("6");
-    this.btmVal.setVisible(true);    
-   } else if(stylebtm.getSelectedItem()== "0216 (Envelope Base)") {
-    this.jLabelBtm.setText("Btm Lock OL:");
-    this.jLabelBtm.setVisible(true); 
-    this.btmVal.setText("25");
-    this.btmVal.setVisible(true);    
-   } else {
-    this.jLabelBtm.setText(" ");
-    this.jLabelBtm.setVisible(false); 
-    this.btmVal.setText("0");
-    this.btmVal.setVisible(false);       
-   }
-   
   } // end of stylebtm_ItemStateChanged
 
     

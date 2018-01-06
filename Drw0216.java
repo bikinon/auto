@@ -8,7 +8,9 @@ public class Drw0216 extends dxf12objects {
     public double w4 = 0;
     public double flange = 0;
     public double btmFlap = 0;
-    public double tab = 0;
+    public double crn = l3 / 4;  
+    public double flplen = l3 / 2;
+    public double tab = 25;
     public double slot = 2;
 
     public String CUT = "CUT";
@@ -18,15 +20,17 @@ public class Drw0216 extends dxf12objects {
     protected String drw00216btmFalps() {
       // Expects to start at 0,0  
       // Draw 0216 Pushlock / Envelope base Bottom Flaps
-    double crn = l3 / 4;  
-    double flplen = l3 / 2;
+    crn = l3 / 4;  
+    flplen = l3 / 2;
     
     femalepush(l1, crn); // (0,0), (l1,0), TRUE, bflap,2,(l3/4),30);
     inrside(w2, crn, flplen); // (0,0), (w2,0), TRUE, bflap,2,(l3/4),(p3/2));
     malepush(l3, crn); // (0,0), (l3,0), TRUE, bflap,(l3/4),30);
     this.relMove(w4, 0);
-    inrside(w2, crn, flplen); // (0,0), (-w4, 0), FALSE, bflap,2,(l3/4),(l3/2));
-      
+    this.Xaxis = -1;
+    inrside(w4, crn, flplen); // (0,0), (-w4, 0), FALSE, bflap,2,(l3/4),(l3/2));
+    this.Xaxis = 1;
+    
     return dxf;     
   } // drw00216btmFalps   
     

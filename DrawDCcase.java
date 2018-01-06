@@ -111,6 +111,9 @@ public class DrawDCcase extends dxf12objects {
     } else if(this.btmStyle == "0700 Auto Std") {  
       this.drw0700StdCrashLockBtmFlaps();
       
+    } else if(this.btmStyle == "0216 (Envelope Base)") {  
+      this.drw0216EnvelopeBtmFlaps();
+      
     } else { // this.btmStyle == "0201 (OFOTB)")
       this.Yaxis = -1;
       drw02xx(this.btmFlap, this.btmInrFlap);
@@ -359,6 +362,23 @@ public class DrawDCcase extends dxf12objects {
     
     dxf += d0700.drw0700StdCrashLockBtmFlaps();   
   } // drw0700StdCrashLockBtmFlaps
+
+  
+  protected void drw0216EnvelopeBtmFlaps() {
+    // Expects to start at 0 0 
+    // Draw Std 0216 Bottom Flaps
+    Drw0216 d0216 = new Drw0216();
+    d0216.l1 = this.l1;
+    d0216.w2 = this.w2;
+    d0216.l3 = this.l3;
+    d0216.w4 = this.w4;   
+    d0216.flange = this.flange;
+    d0216.btmFlap = this.btmFlap;
+    d0216.tab = 25;
+    d0216.slot = 2;
+    
+    dxf += d0216.drw00216btmFalps();   
+  } // drw0216EnvelopeBtmFlaps  
   
   
   protected boolean allowanceSetup() {
@@ -379,7 +399,7 @@ public class DrawDCcase extends dxf12objects {
       //      autoLugD = 6;
       //      lugAng = 1;
       // btm 45deg GL flap
-      btm45Rad = 4;
+      btm45Rad = 3;
       //       btmFlap= w2 / 2; // Used on Btm panels 2, 3 & 4
       // btm Std Auto Length Flap
       lockSlot = 4;
@@ -410,7 +430,7 @@ public class DrawDCcase extends dxf12objects {
       //      autoLugD = 6;
       //      lugAng = 1;
       // btm 45deg GL flap
-      btm45Rad = 4;
+      btm45Rad = 3;
       //     btmFlap = w2 / 2; // Used on Btm panels 2, 3 & 4
       // btm Std Auto Length Flap
       lockSlot = 4;
@@ -442,7 +462,7 @@ public class DrawDCcase extends dxf12objects {
       //      autoLugD = 6;
       //      lugAng = 1;
       // btm 45deg GL flap
-      //      btm45Rad = 3;
+      btm45Rad = 2;
       //      btmFlap = w2 / 2; // Used on Btm panels 2, 3 & 4
       // btm Std Auto Length Flap
       lockSlot = 4;
