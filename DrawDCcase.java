@@ -93,6 +93,22 @@ public class DrawDCcase extends dxf12objects {
     //    dxfxmax = String.valueOf((dmain + dblbend + toeflap) * 2 + lmain);
     // DimensionSizes(0.0, 0.0, Double.parseDouble(dxfxmax), Double.parseDouble(dxfymax));
     this.allowanceSetup();
+    calcBlkSz();
+    
+    MachineSz mc = new MachineSz();
+        mc.s1wayNet = this.s1way;
+        mc.n2wayNet = this.n2way;
+        mc.flange = this.flange;
+        mc.l1 = l1;
+        mc.w2 = w2;
+        mc.l3 = l3;
+        mc.w4 = w4;
+        mc.btmFlap = this.btmFlap;
+        mc.topFlap = this.topFlap;
+        mc.pnlDepth = this.dotr;
+        mc.desStyle = "";
+    mc.checkLimits();
+    
     this.makeupCheck();
     
     dxf += this.dxf_header12();
@@ -289,7 +305,7 @@ public class DrawDCcase extends dxf12objects {
     d0202hh.topFlap = topFlap; // needs improvement of B & C
     
     dxf += d0202hh.drwHammerheadFlaps();
-  }
+  } // drwHammerheadFlaps
   
   
   protected void drw0701FullOLbtmFalps() {
@@ -385,7 +401,7 @@ public class DrawDCcase extends dxf12objects {
     double daTop = 0;
     double daBtm = 0;
     // allowances 
-    if ((flute == "C") || (flute == "EB")) {
+    if (flute.equals("C") || flute.equals("EB")) {
       l1 = length + 5; // length main
       w2 = width + 5; //
       l3 = length + 5;
@@ -394,15 +410,12 @@ public class DrawDCcase extends dxf12objects {
       topOtrRad = 3; // Top outer flap slot base radius
       topInrRad = 2; // Top inner flap slot base radius      
       btmRad = 3;  // Used on all but the 45deg fold as more clearence needed    
-      // Auto Full OL flap
-      //      autoOl = width + 0.5; 
-      //      autoLugD = 6;
-      //      lugAng = 1;
+      // Auto Full OL flap - See style0701AutoFullOL for Sizes & Allowances
       // btm 45deg GL flap
       btm45Rad = 3;
       //       btmFlap= w2 / 2; // Used on Btm panels 2, 3 & 4
       // btm Std Auto Length Flap
-      lockSlot = 4;
+      lockSlot = 6;
       lockSlotAng = 3;
       // 0215PS
       t0215sInr = 2;
@@ -411,11 +424,11 @@ public class DrawDCcase extends dxf12objects {
       t0215DustInSet = 4;
       t0215TuckFlap = this.w2 + 3;    
       
-      bofstTop = 2; // 020x Bend Offset
-      bofstBtm = 2;
+      bofstTop = 3; // 020x Bend Offset
+      bofstBtm = 3;
       slot =  3;
       
-    } else if (flute == "B") {
+    } else if (flute.equals("B")) {
       l1 = length + 3; // length main
       w2 = width + 3; //
       l3 = length + 3;
@@ -425,15 +438,12 @@ public class DrawDCcase extends dxf12objects {
       topOtrRad = 3;
       topInrRad = 2;      
       btmRad = 3;  // Used on all but the 45deg fold as more clearence needed    
-      // Auto Full OL flap
-      //      autoOl = width + 0.5; 
-      //      autoLugD = 6;
-      //      lugAng = 1;
+      // Auto Full OL flap - See style0701AutoFullOL for Sizes & Allowances
       // btm 45deg GL flap
       btm45Rad = 3;
       //     btmFlap = w2 / 2; // Used on Btm panels 2, 3 & 4
       // btm Std Auto Length Flap
-      lockSlot = 4;
+      lockSlot = 5;
       lockSlotAng = 3;
       // 0215PS
       t0215sInr = 2;
@@ -447,6 +457,33 @@ public class DrawDCcase extends dxf12objects {
       bofst = 2; // 020x Bend Offset
       slot =  3;
       
+    } else  if (flute.equals("BC")) {
+      l1 = length + 7; // length main
+      w2 = width + 7; //
+      l3 = length + 7;
+      w4 = width + 3;
+      stdDepthAllow = 16; //  
+      topOtrRad = 4; // Top outer flap slot base radius
+      topInrRad = 3; // Top inner flap slot base radius      
+      btmRad = 3;  // Used on all but the 45deg fold as more clearence needed    
+      // Auto Full OL flap - See style0701AutoFullOL for Sizes & Allowances
+      // btm 45deg GL flap
+      btm45Rad = 3;
+      //       btmFlap= w2 / 2; // Used on Btm panels 2, 3 & 4
+      // btm Std Auto Length Flap
+      lockSlot = 7;
+      lockSlotAng = 3;
+      // 0215PS
+      t0215sInr = 3;
+      t0215sOtr = 4;
+      t0215BndOfst = 4;
+      t0215DustInSet = 5;
+      t0215TuckFlap = this.w2 + 4;    
+      
+      bofstTop = 5; // 020x Bend Offset
+      bofstBtm = 5;
+      slot =  4;
+      
     } else {  // E Flute
       l1 = length + 2; // length main
       w2 = width + 2; //
@@ -457,10 +494,7 @@ public class DrawDCcase extends dxf12objects {
       topOtrRad = 3;
       topInrRad = 2;      
       btmRad = 2;  // Used on all but the 45deg fold as more clearence needed    
-      // Auto Full OL flap
-      //      autoOl = width + 0.5; 
-      //      autoLugD = 6;
-      //      lugAng = 1;
+      // Auto Full OL flap - See style0701AutoFullOL for Sizes & Allowances
       // btm 45deg GL flap
       btm45Rad = 2;
       //      btmFlap = w2 / 2; // Used on Btm panels 2, 3 & 4
@@ -477,7 +511,7 @@ public class DrawDCcase extends dxf12objects {
       bofstTop = 2; // 020x Bend Offset
       bofstBtm = 2;
       bofst = 2; // 020x Bend Offset
-      slot =  3;
+      slot =  2;
     } // end of if-else
     
     // Top Flaps
@@ -603,10 +637,10 @@ public class DrawDCcase extends dxf12objects {
     allowanceSetup();
     makeupCheck();
     
-    if (this.topStyle == "Full Overlap" && this.btmStyle == "0701 Auto Full OL") {
+    if (this.topStyle == "Full Overlap" && (this.btmStyle == "0701 Auto Full OL") || (this.btmStyle == "0701 Auto Full OL RC")) {
       this.s1way = this.topFlap + this.dotr + this.autoOl + this.autoLugD;
     } // end of if
-    if (this.topStyle == "Hammer Head OL" && this.btmStyle == "0701 Auto Full OL") {
+    if (this.topStyle == "Hammer Head OL" && (this.btmStyle == "0701 Auto Full OL") || (this.btmStyle == "0701 Auto Full OL RC")) {
       this.s1way = this.topFlap + this.dotr + this.autoOl + this.autoLugD;
     } // end of if  
     

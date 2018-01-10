@@ -19,17 +19,18 @@ public class Drw020x extends dxf12objects {
     
     
     public String drwFlaps(double flap, double inrFlap) {      
-        double ac = 2; // Angle Cut-in?
-        
+       double ac = 2; // Angle Cut-in?
+       double cfa = 15; // Chamfer Flap Angle Top
+       
       this.angFlapOtr(this.l1, flap, slot, ac, bofst, slot);
         this.relMove(slot + ac, -(flap + bofst)); //-inrFlap);
         
-        this.ChamFlapInr(this.w2, 2, inrFlap, (flap / 3), 15);  
+        this.ChamFlapInr(this.w2, slot, inrFlap, (flap / 3), cfa);  
         
         if (this.Yaxis == -1) {
         //  this.relMove(0, bofst*2); // No idea why
         } else {
-          this.relMove(0, -bofst*2); // No idea why
+          this.relMove(0, -slot*2); // No idea why  Slot*2  was bofst*2 - Something around the positioning after the arc2 command here?
         }
         this.angFlapOtr(this.l3, flap, slot, ac, bofst, slot);
         
@@ -37,7 +38,7 @@ public class Drw020x extends dxf12objects {
         if(this.Yaxis == 1) {
          this.relMove(0, this.dotr);
         }
-      this.ChamFlapInrP4(this.w4, 2, inrFlap, (flap / 3), 15, 15 - (w2-w4) + 2);
+      this.ChamFlapInrP4(this.w4, slot, inrFlap, (flap / 3), cfa, cfa - (w2-w4) + 2); // ??? 2mm ??
       
       return dxf;
     } // drw020x
@@ -57,14 +58,15 @@ public class Drw020x extends dxf12objects {
    // *** Draw Angled, normally an OUTER with an offset in Depth of flap ***    
     double lbc = 0;
     double flatSide[] = {0,0,0,0};
-          if (bof > 0) {
+        
+        if (bof > 0) {
              FilletLines oTmp = new FilletLines();
              lbc = oTmp.findBendXonArc(bof, rad); 
              flatSide = oTmp.findFilletPoints(ac, flp + bof, rad);
              lbc = lbc + (slot - flatSide[3]);
-          } else {  
+        } else {  
              lbc = slot - rad;
-          }
+        }
           relMove(lbc, bof);
           Line( dis - (lbc * 2), 0, "CREASE"); // CREASE Line
           relMove( -dis + lbc, -bof); // Re-set Origin Point
@@ -122,7 +124,7 @@ public class Drw020x extends dxf12objects {
       } else {  
         this.arc2(this.xabs, this.yabs + slot, slot, 270, 0, slot, slot, CUT);
       } 
-      Line( 0, flp-adfcut-slot, CUT );
+      Line( 0, flp-adfcut-slot, CUT);
       Line(aitop, adfcut, CUT);
       Line(dis-(slot*2)-aitop*2 , 0, CUT);
       Line(aitop,-adfcut, CUT);

@@ -154,7 +154,7 @@ public class CalcFlapSz {
 //          topFlap = (w2) / 2 + 1;
 //          topOtrRad = 3;
 //          topInrRad = 2; 
-        bofst=2;
+//        bofst=2;
       otrFlap=(width/2)+fa;                          
       if (width/2 != Math.rint(width/2)) {                      
         otrFlap = ((width+fr)/2)+fa;
@@ -165,7 +165,7 @@ public class CalcFlapSz {
     
     protected void style0202() {
       // GetInput("0202-00 Outer Flap Overlap", flapEx);
-        bofst=2;
+  //      bofst=2;
         otrFlap=((width + flapEx)/2)+fa;                          
       if ((width + flapEx) / 2 != Math.rint((width + flapEx) / 2) ) {                       
         otrFlap=(((width + flapEx) + fr) / 2) + fa;
@@ -208,7 +208,7 @@ public class CalcFlapSz {
 
     
     protected void style0204() {
-     bofst=2;
+    // bofst=2;
      otrFlap=(width/2)+fa;                          
      if (width/2 != Math.rint(width/2)) {                       
        otrFlap=((width+fr)/2)+fa;
@@ -222,7 +222,7 @@ public class CalcFlapSz {
     
     
     protected void style0204c() {
-     bofst=2;
+  //   bofst=2;
      otrFlap=(width/2)+fa;                          
      if (width/2 != Math.rint(width/2)) {                       
        otrFlap=((width+fr)/2)+fa;
@@ -233,7 +233,7 @@ public class CalcFlapSz {
     
     
     protected void style0205() {
-      bofst=2;
+    //  bofst=2;
     otrFlap=(length/2)+fa;                          
     if (length/2 != Math.rint(length/2)) {                      
       otrFlap=((length+fr)/2)+fa;
@@ -249,7 +249,7 @@ public class CalcFlapSz {
     
     
     protected void style0207() {    
-      bofst=2;
+    //  bofst=2;
       inrFlap=width; // just a dummy fig for biflap
     } // style0207
     
@@ -257,7 +257,7 @@ public class CalcFlapSz {
     protected void style0209g() {
     //flapEx=6;
     // GetInput("0209-02 Outer Flaps Gap", flapEx);
-      bofst=2;
+   //   bofst=2;
       otrFlap=((width-flapEx)/2)+fa;                          
     if ((width-flapEx)/2 != Math.rint(width-flapEx) / 2 ) {                       
       otrFlap=(((width-flapEx)+fr)/2)+fa;
@@ -268,7 +268,7 @@ public class CalcFlapSz {
     
     
     protected void style0209f() {
-      bofst=2;
+    //  bofst=2;
       otrFlap=this.flapEx;
     // GetInput("0209-01: Short Flap (65mm std size)", otrFlap);
       if (flute == "EB") {
@@ -280,7 +280,7 @@ public class CalcFlapSz {
     
     
     protected void style0210() {
-      bofst=2;
+    //  bofst=2;
       inrFlap=(length/2)+fa;                          
       if (length/2 != Math.rint(length/2)) {                        
         inrFlap=((length+fr)/2)+fa;
@@ -377,11 +377,11 @@ public class CalcFlapSz {
       case "C": 
       case "EB": // C flute
           autoOl = width + 2.5; 
-            autoLugD = 4.5;
+            autoLugD = 5;
         break;
       case "BC": // BC flute
           autoOl = width + 3; 
-            autoLugD = 5;
+            autoLugD = 6;
         break;
       } // switch 
         

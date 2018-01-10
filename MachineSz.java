@@ -6,6 +6,7 @@ public class MachineSz {
 
     // Machine Size
     public String diecutter = "Elite";
+    public String gluer = "Bobst";
     public String desStyle = "";
     public double s1wayNet = 0;
     public double n2wayNet = 0;
@@ -21,6 +22,17 @@ public class MachineSz {
     public double btmFlap = 0;
     public double pnlDepth = 0; // Panel Depth
     
+    public boolean checkLimits() {
+        boolean rtnVal = true;
+        
+        eliteOK();
+        
+        bobstVgOK();
+        
+        
+        return rtnVal;
+    }
+    
 public boolean eliteOK() {
     boolean rtnVal = true;
     
@@ -31,14 +43,15 @@ public boolean eliteOK() {
     double maxnCrsFeed = 1620 - trim2n;
 
     if(s1wayNet < 152) {
-      msg = msg + "ELITE - 1st WAY TOO SMALL by " + Double.toString(s1wayNet - 152) + "\n";
+      msg = msg + "1st WAY TOO SMALL by " + Double.toString(s1wayNet - 152) + "\n";
     }
      if(n2wayNet < 600) {
-      msg = msg + "ELITE - 2nd WAY TOO SMALL by " + Double.toString(n2wayNet - 600) + "\n";
+      msg = msg + "2nd WAY TOO SMALL by " + Double.toString(n2wayNet - 600) + "\n";
     }   
     
-    JOptionPane.showMessageDialog(null, msg, "Plant Limits", JOptionPane.WARNING_MESSAGE);  
-    return rtnVal;
+    if (msg.length() > 1) { 
+        JOptionPane.showMessageDialog(null, msg, "ELITE - Plant Limits", JOptionPane.WARNING_MESSAGE);
+    }     return rtnVal;
 } // eliteOK
 
 
@@ -52,14 +65,16 @@ public boolean topraOK() {
     double maxnCrsFeed = 2200 - trim2n;
 
     if(s1wayNet > maxFeed) {
-      msg = msg + "TOPRA - 1st WAY TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
+      msg = msg + "1st WAY TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
     }
      if(n2wayNet > maxnCrsFeed) {
-      msg = msg + "TOPRA - 2nd WAY TOO BIG by " + Double.toString(n2wayNet - 600) + "\n";
+      msg = msg + "2nd WAY TOO BIG by " + Double.toString(n2wayNet - 600) + "\n";
     }   
     
-    JOptionPane.showMessageDialog(null, msg, "Plant Limits", JOptionPane.WARNING_MESSAGE);
-    return rtnVal;
+    if (msg.length() > 1) { 
+        JOptionPane.showMessageDialog(null, msg, "TOPRA - Plant Limits", JOptionPane.WARNING_MESSAGE);
+    } 
+     return rtnVal;
 } // topraOK
 
 
@@ -67,52 +82,108 @@ public boolean bobstVgOK() {
     boolean rtnVal = true;
     
     String msg = "";
-    double trim1s = 30;
-    double trim2n = 30; 
-    double maxFeed = 1200 - trim1s; // change from 1100
-    double maxnCrsFeed = 2200 - trim2n;
-
+    double maxFeed = 1100; 
+    double maxCrsFeed = 1700;
+    double minFeed = 60; 
+    double minCrsFeed = 296;
+    double minLWratio = 1;
+    double maxLWratio = 6.375;
+    // 1st & 2nd way Sizes
     if(s1wayNet > maxFeed) {
-      msg = msg + "BOBST VG - THROUGH MC SIZE TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
+      msg = msg + "THROUGH MC SIZE TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
     }
-     if(n2wayNet > maxnCrsFeed) {
-      msg = msg + "BOBST VG - CROSS MC SIZE TOO BIG by " + Double.toString(n2wayNet - 600) + "\n";
+    if(n2wayNet > maxCrsFeed) {
+      msg = msg + "CROSS MC SIZE TOO BIG by " + Double.toString(n2wayNet - maxCrsFeed) + "\n";
     }   
-    if(s1wayNet > maxFeed) {
-      msg = msg + "BOBST VG - THROUGH MC SIZE TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
+    if(s1wayNet < minFeed) {
+      msg = msg + "THROUGH MC SIZE TOO SMALL by " + Double.toString(s1wayNet - minFeed) + "\n";
     }
-     if(n2wayNet > maxnCrsFeed) {
-      msg = msg + "BOBST VG - CROSS MC SIZE TOO BIG by " + Double.toString(n2wayNet - 600) + "\n";
+     if(n2wayNet < minCrsFeed) {
+      msg = msg + "CROSS MC SIZE TOO SMALL by " + Double.toString(n2wayNet - minCrsFeed) + "\n";
     }
-     
-    if(l1 > 10) {
-      msg = msg + "BOBST VG - Length(P1) TOO BIG by " + Double.toString(l1 - 10) + "\n";
+    // Panel Sizes 
+    String LWmsg = "";
+    if(l1 + w2 > 835) {
+      LWmsg = LWmsg + "Length+Width(P1+P2) TOO BIG by " + Double.toString(l1 + w2 - 835) + "\n";
     }
-     if(l1 < 10) {
-      msg = msg + "BOBST VG - Length(P1) TOO SMALL by " + Double.toString(l1 - 10) + "\n";
+    if(l1 + w2 < 145) {
+      LWmsg = LWmsg + "Length+Width(P1+P2) TOO SMALL by " + Double.toString(l1 + w2 - 145) + "\n";
     }
-    if(l1 + w2 > 10) {
-      msg = msg + "BOBST VG - P2+P3 TOO BIG by " + Double.toString(l1 - 10) + "\n";
+    if(l1 / w2 > maxLWratio) {
+      LWmsg = LWmsg + "Length:Width Ratio(P1:P2) TOO BIG by " + Double.toString((l1 / w2) - maxLWratio) + "\n";
     }
-     if(l1 + w2 < 10) {
-      msg = msg + "BOBST VG - P2+P3 TOO SMALL by " + Double.toString(l1 - 10) + "\n";
-    }     
- 
+    if(l1 / w2 < minLWratio) {
+      LWmsg = LWmsg + "Length:Width Ratio(P1:P2) TOO SMALL by " + Double.toString((l1 / w2) - minLWratio) + "\n";
+    }
+    // Length Panel
+    if(l1 < 72.5) {
+      LWmsg = LWmsg + "Length(P1) TOO SMALL Crashlock by " + Double.toString(l1 - 72.5) + "\n";
+    } else if(l1 < 115) {
+      LWmsg = LWmsg + "**Length(P1) Crashlock *MAY BE* TOO SMALL by " + Double.toString(l1 - 115) + "**\n";
+    } else if(l1 > 716) {
+      LWmsg = LWmsg + "**Length(P1) 0713 Alt Panel Arrange TOO BIG by " + Double.toString(l1 - 780.5) + "\n";
+    } else if(l1 > 780.5) {
+      LWmsg = LWmsg + "Length(P1) 0713 TOO BIG by " + Double.toString(l1 - 716) + "**\n";
+    }    
+    
+    // Width Panel
+    if(w4 > 417.5) {
+      LWmsg = LWmsg + "Width(P4) TOO BIG by " + Double.toString(w4 - 417.5) + "\n";
+    } else if(w4 < 72.5) {
+      LWmsg = LWmsg + "Width(P4) Crashlock *MAY BE* TOO SMALL by " + Double.toString(w4 - 72.5) + "\n";
+    } else if(w4 < 30) {
+      LWmsg = LWmsg + "Width(P4) Crashlock TOO SMALL by " + Double.toString(w4 - 30) + "\n";
+    } else if(w4 < 27.5) {
+      LWmsg = LWmsg + "Width(P4) 0211/0201 TOO SMALL by " + Double.toString(w4 - 27.5) + "\n";
+    }
+    msg = msg + LWmsg; // Add Panel Mesages 
+    // flange
     if(flange > 30) {
-      msg = msg + "BOBST VG - Depth TOO BIG by " + Double.toString(flange - 30) + "\n";
+      msg = msg + "FLANGE TOO BIG by " + Double.toString(flange - 30) + "\n";
     }
-     if(flange < 6) {
-      msg = msg + "BOBST VG - Depth TOO SMALL by " + Double.toString(flange - 6) + "\n";
+    if(flange < 6) {
+      msg = msg + "FLANGE TOO SMALL by " + Double.toString(flange - 6) + "\n";
     }
-     
-    if(pnlDepth > 10) {
-      msg = msg + "BOBST VG - Depth TOO BIG by " + Double.toString(pnlDepth - 10) + "\n";
+    // Depth - No actual limits given 
+    if(pnlDepth > 1100) {
+      msg = msg + "Depth TOO BIG by " + Double.toString(pnlDepth - 1100) + "\n";
     }
      if(pnlDepth < 10) {
-      msg = msg + "BOBST VG - Depth TOO SMALL by " + Double.toString(pnlDepth - 10) + "\n";
+      msg = msg + "Depth TOO SMALL by " + Double.toString(pnlDepth - 10) + "\n";
     }
-     
-     JOptionPane.showMessageDialog(null, msg, "Plant Limits", JOptionPane.WARNING_MESSAGE);
+    
+    /***** 4 POINT GLUED 0451/0304 DESIGNS ************************************************************************************/ 
+    if (flange == 0) {
+        if(s1wayNet > 1100) {
+          msg = msg + "THROUGH MC SIZE TOO BIG by " + Double.toString(s1wayNet - 1100) + "\n";
+        }
+        if(n2wayNet > 1500) {
+          msg = msg + "CROSS MC SIZE 0451/0304 TOO BIG by " + Double.toString(n2wayNet - 1500) + "\n";
+        }   
+        if(s1wayNet < 130) {
+          msg = msg + "THROUGH MC SIZE TOO SMALL by " + Double.toString(s1wayNet - 130) + "\n";
+        }
+         if(n2wayNet < 205) {
+          msg = msg + "CROSS MC SIZE 0451/0304 TOO SMALL by " + Double.toString(n2wayNet - 205) + "\n";
+        }
+        if(pnlDepth > 200) {
+          msg = msg + "Depth TOO BIG by " + Double.toString(pnlDepth - 200) + "\n";
+        }
+        if(pnlDepth < 30) {
+          msg = msg + "Depth TOO SMALL by " + Double.toString(pnlDepth - 30) + "\n";
+        }
+        double panelSz = n2wayNet - (pnlDepth * 2); // Panel size accross the machine
+        if(panelSz > 1200) {
+          msg = msg + "CROSS MC Panel 0451/0304 TOO BIG by " + Double.toString(panelSz - 1200) + "\n";
+        }
+        if(panelSz < 145) {
+          msg = msg + "CROSS MC Panel 0451/0304 TOO SMALL by " + Double.toString(panelSz - 145) + "\n";
+        }   
+    }
+    
+    if (msg.length() > 1) { 
+        JOptionPane.showMessageDialog(null, msg, "Plant Limits - BOBST VARIABLE GLUER", JOptionPane.WARNING_MESSAGE);
+    } 
      return rtnVal;
 } // bobstVgOK
 
@@ -173,8 +244,10 @@ boolean rtnVal = true;
     If temp > 1828 Then
       MessageDlg(men, mtInformation, [mbOk], 0);
 */
-  JOptionPane.showMessageDialog(null, msg, "Plant Limits", JOptionPane.WARNING_MESSAGE);
-  return rtnVal;
+    if (msg.length() > 1) { 
+        JOptionPane.showMessageDialog(null, msg, "Plant Limits - GLUER", JOptionPane.WARNING_MESSAGE);
+    }
+    return rtnVal;
 } // pakmet
 
 

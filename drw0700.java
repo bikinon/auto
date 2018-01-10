@@ -1,7 +1,9 @@
 package auto;
 
 public class drw0700 extends dxf12objects {
-
+/*
+Std 25mm OL Crashlock bottom design    
+*/
   public double l1 = 0; // length main
   public double w2 = 0; //
   public double l3 = 0;

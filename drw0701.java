@@ -1,7 +1,9 @@
 package auto;
 
 public class drw0701 extends dxf12objects {
-
+/*
+  Full OL Crashlock Base    
+*/
     public double l1 = 0; // length main
     public double w2 = 0; //
     public double l3 = 0;
@@ -54,7 +56,16 @@ public class drw0701 extends dxf12objects {
       // Fully overlapping Auto bottom panel
       double tmpX = this.xabs; // Store Start point top Left of Flap 
       double tmpY = this.yabs;
+      double rad1 = 2;
       double rad2 = 2.5;
+      // this.btmRad - 
+      if (this.btmRad == 2) { // E Flute
+          rad1 = 4;
+      } else if (btmRad >= 3) {
+          rad1 = 6;
+      } else {
+          rad1 = 2;
+      }
       
       this.Line(this.btmRad, 0, CUT);
       this.Line(this.autoOlLang, -this.autoOl , CUT);
@@ -67,7 +78,7 @@ public class drw0701 extends dxf12objects {
       this.Line(this.lugAng, this.autoLugD, CUT); 
       this.Line(toLug - this.autoOlRang, 0, CUT);
       
-        this.relMove(this.btmRad + this.autoOlRang, this.autoOl);
+      this.relMove(this.btmRad + this.autoOlRang, this.autoOl);
       FilletLines oFl2 = new FilletLines(); // Takes mainly Incremental line values
         oFl2.absFlatXstr = this.xabs; // Start Point
         oFl2.absFlatYstr = this.yabs;   
@@ -95,7 +106,7 @@ public class drw0701 extends dxf12objects {
       double panelLen = 0; 
       double topAngCutIn = Math.cos(Math.toRadians(45)) * 10; //10mm 45deg cutout section;
       double flangeCutIn = this.flange + 5; // use 5mm on top of flange for now 
-      double fishtailRdctn = 2; // Reduction over and above the 3mm Left edge cut in to allow for Fishtailing on the machine
+      double fishtailRdctn = 1; // Reduction over and above the 2mm? Left edge cut in on straight down line to allow for Fishtailing on the machine
       double leftFlapCutIn = topAngCutIn - fishtailRdctn; // want More than 3mm due to fishtailing so 5mm(2mm reduction from the backward movement)
         double strX = this.xabs;
         double strY = this.yabs;
@@ -109,26 +120,42 @@ public class drw0701 extends dxf12objects {
       /* Start Left side with 45 deg bend section*/
 //      this.Line(this.btm45Rad, 0, CUT);
 //      this.Line(topAngCutIn, -topAngCutIn, this.CUT);
-      double rad1 = 7;
-      double rad2 = 2.5;
-
+      double rad1 = 4; //7; // btmRad: Straight Down Line - E Straight=2, R=4 / 
+      double rad2 = 1; //    btm45Rad: E Straight=1 R=1 / B Str=2 R=2.5 / C Str=3 R=4
+      // Angled side Radius
+      if (this.btm45Rad == 1) { // E and below
+         rad2 = 1; 
+      } else if (this.btm45Rad == 2) {
+         rad2 = 2.5; 
+      } else { // C and above
+         rad2 = 4; 
+      }
+      // Straight / 45deg Bend Radius
+      if (this.btmRad == 2) { // E Flute
+          rad1 = 4;
+      } else if (btmRad >= 3) {
+          rad1 = 6;
+      } else {
+          rad1 = 2;
+      }
+      
         FilletLines oFl = new FilletLines(); // Takes mainly Incremental line values
         oFl.absFlatXstr = this.xabs; // Start Point
         oFl.absFlatYstr = this.yabs;    
         oFl.incLineMeetX = this.btm45Rad; 
-    oFl.incLineMeetY = 0; 
-    oFl.incAngXend = topAngCutIn; 
-    oFl.incAngYend = topAngCutIn; 
+        oFl.incLineMeetY = 0; 
+        oFl.incAngXend = topAngCutIn; 
+        oFl.incAngYend = topAngCutIn; 
         oFl.radius = rad1;
         oFl.dir = "L"; // LEFT SIDE: X axis = 1
         oFl.Yaxis = -1; //this.Yaxis; // UP or DOWN
         dxf += oFl.fillet();
-        this.relMove(this.btm45Rad + topAngCutIn, -topAngCutIn);      
+        this.relMove(this.btm45Rad + topAngCutIn, -topAngCutIn);  // "Key" Cut-out     
       
       this.Line(this.btmFlap - topAngCutIn, -this.btmFlap + topAngCutIn, "CUTCRE6");
       this.relMove(-this.btmFlap + topAngCutIn, this.btmFlap - topAngCutIn);
       
-      this.Line(-leftFlapCutIn, -leftFlapCutIn, this.CUT); // Right Angle - Moving away from the 45 deg Cut & Bend intersection     
+      this.Line(-leftFlapCutIn, -leftFlapCutIn, CUT); // Right Angle - Moving away from the 45 deg Cut & Bend intersection     
       this.Line(0, -this.btmFlap + (topAngCutIn + leftFlapCutIn), CUT);
 
       
@@ -152,7 +179,7 @@ public class drw0701 extends dxf12objects {
           FilletLines oFl2 = new FilletLines(); // Takes mainly Incremental line values
           oFl2.absFlatXstr = this.xabs; // Start Point
           oFl2.absFlatYstr = this.yabs;   
-          oFl2.incLineMeetX = this.btm45Rad - 1; // WHY - because it was always 3mm fix in allowances
+          oFl2.incLineMeetX = this.btm45Rad; // WHY - because it was always 3mm fix in allowances
       oFl2.incLineMeetY = 0; 
       oFl2.incAngXend = -this.p2ang; 
       oFl2.incAngYend = this.btmFlap; 
