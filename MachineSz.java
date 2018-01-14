@@ -22,7 +22,10 @@ public class MachineSz {
     public double btmFlap = 0;
     public double pnlDepth = 0; // Panel Depth
     
+    
     public boolean checkLimits() {
+    /*  Check the Plant limits to see if we can make this Pack        
+        */        
         boolean rtnVal = true;
         
         eliteOK();
@@ -41,17 +44,26 @@ public boolean eliteOK() {
     double trim2n = 30; 
     double maxFeed = 1200 - trim1s; // change from 1100
     double maxnCrsFeed = 1620 - trim2n;
-
-    if(s1wayNet < 152) {
-      msg = msg + "1st WAY TOO SMALL by " + Double.toString(s1wayNet - 152) + "\n";
+    double minFeed = 450 - trim1s; 
+    double minCrsFeed = 650 - trim2n;
+    
+    if(s1wayNet > maxFeed) {
+      msg = msg + "THROUGH MC SIZE TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
     }
-     if(n2wayNet < 600) {
-      msg = msg + "2nd WAY TOO SMALL by " + Double.toString(n2wayNet - 600) + "\n";
+     if(n2wayNet > maxnCrsFeed) {
+      msg = msg + "CROSS MC SIZE TOO BIG by " + Double.toString(n2wayNet - maxnCrsFeed) + "\n";
     }   
+    if(s1wayNet < minFeed) {
+      msg = msg + "THROUGH MC SIZE TOO SMALL by " + Double.toString(s1wayNet - minFeed) + "\n";
+    }
+     if(n2wayNet < minCrsFeed) {
+      msg = msg + "CROSS MC SIZE TOO SMALL by " + Double.toString(n2wayNet - minCrsFeed) + "\n";
+    }  
     
     if (msg.length() > 1) { 
         JOptionPane.showMessageDialog(null, msg, "ELITE - Plant Limits", JOptionPane.WARNING_MESSAGE);
-    }     return rtnVal;
+    }     
+    return rtnVal;
 } // eliteOK
 
 
@@ -59,18 +71,27 @@ public boolean topraOK() {
     boolean rtnVal = true;
     
     String msg = "";
-    double trim1s = 30;
-    double trim2n = 30; 
+    double trim1s = 0; // ??????????
+    double trim2n = 20; 
     double maxFeed = 1200 - trim1s; // change from 1100
     double maxnCrsFeed = 2200 - trim2n;
-
+    double minFeed = 300 - trim1s; 
+    double minCrsFeed = 600 - trim2n;
+    
     if(s1wayNet > maxFeed) {
-      msg = msg + "1st WAY TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
+      msg = msg + "THROUGH MC SIZE TOO BIG by " + Double.toString(s1wayNet - maxFeed) + "\n";
     }
      if(n2wayNet > maxnCrsFeed) {
-      msg = msg + "2nd WAY TOO BIG by " + Double.toString(n2wayNet - 600) + "\n";
+      msg = msg + "CROSS MC SIZE TOO BIG by " + Double.toString(n2wayNet - maxnCrsFeed) + "\n";
     }   
-    
+    if(s1wayNet < minFeed) {
+      msg = msg + "THROUGH MC SIZE TOO SMALL by " + Double.toString(s1wayNet - minFeed) + "\n";
+    }
+    if(n2wayNet < minCrsFeed) {
+      msg = msg + "CROSS MC SIZE TOO SMALL by " + Double.toString(n2wayNet - minCrsFeed) + "\n";
+    } 
+     
+     
     if (msg.length() > 1) { 
         JOptionPane.showMessageDialog(null, msg, "TOPRA - Plant Limits", JOptionPane.WARNING_MESSAGE);
     } 

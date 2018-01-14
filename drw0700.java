@@ -67,12 +67,12 @@ Std 25mm OL Crashlock bottom design
       this.Line(-(panelLen/2 - (flapOL - dwnLck) - this.p2ang), 0, CUT);
 //        this.Line(-(panelLen - this.btm45Rad - fishtailRdctn - this.p2ang), 0, CUT);   // Flat section at Btm of flap
       
-      if (panel == 1) {
-        this.Line(-this.p2ang, this.btmFlap + flapOL, CUT);
-      } else { // 3
+//      if (panel == 1) {
+//        this.Line(-this.p2ang, this.btmFlap + flapOL, CUT);
+//      } else { // 3
         this.Line(-(this.p2ang - lftIn), this.btmFlap + flapOL, CUT);
         Line(-lftIn, 0, CUT);
-      }
+//      }
         //
         this.Line(panelLen - this.btm45Rad, 0, CREASE);
         this.relMove(-(panelLen - this.btm45Rad), 0); // Back to Start

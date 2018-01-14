@@ -77,7 +77,7 @@ public class Autobox extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("Style:");
 
-        style.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0215+ P&S / Rippa", "Full Overlap P&S / Rippa", "Hammer Head OL", "0200 (Raw Edge)", "0201 (OFOTB)", "0202 (OFO)", "0203 (OFFO)", "0204 (AFM)", "0205 (IFM)", "0206 (IFM / OFFO)", "0209 (Short Top Flap)" }));
+        style.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0215+ P&S / Rippa RC", "0215+ P&S / Rippa", "Full Overlap P&S / Rippa", "Hammer Head OL", "0200 (Raw Edge)", "0201 (OFOTB)", "0202 (OFO)", "0203 (OFFO)", "0204 (AFM)", "0205 (IFM)", "0206 (IFM / OFFO)", "0209 (Short Top Flap)" }));
         style.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 styleActionPerformed(evt);

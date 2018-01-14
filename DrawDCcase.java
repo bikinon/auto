@@ -142,9 +142,12 @@ public class DrawDCcase extends dxf12objects {
     if(this.topStyle == "Hammer Head OL") {
       this.drwHammerheadFlaps();
       
-    } else if(this.topStyle == "0215+ P&S / Rippa") {
+    } else if(this.topStyle == "0215+ P&S / Rippa RC") {
       this.drw0215ps();
-      
+
+    } else if(this.topStyle == "0215+ P&S / Rippa") {
+      this.drw0215psFP1();
+           
     } else if(this.topStyle == "Full Overlap") {  // "Full Overlap"
       drwOverlapTopFlaps();
       
@@ -242,10 +245,31 @@ public class DrawDCcase extends dxf12objects {
     d0215ps.t0215TuckFlap = t0215TuckFlap;
     d0215ps.tuckTabPs = tuckTabPs;  
     
-    dxf += d0215ps.drw0215ps();  
+    dxf += d0215ps.drw0215psFP3();  
     
   } // Drw0215ps
   
+ 
+  protected void drw0215psFP1() {
+    Drw0215ps d0215ps = new Drw0215ps();
+    
+    d0215ps.l1 = this.l1;
+    d0215ps.w2 = this.w2;
+    d0215ps.l3 = this.l3;
+    d0215ps.w4 = this.w4;   
+    d0215ps.flange = this.flange;
+    d0215ps.dotr = this.dotr;
+    
+    d0215ps.t0215sInr = t0215sInr; // Flap Side Inner
+    d0215ps.t0215sOtr = t0215sOtr;
+    d0215ps.t0215BndOfst = t0215BndOfst;
+    d0215ps.t0215DustInSet = t0215DustInSet;
+    d0215ps.t0215TuckFlap = t0215TuckFlap;
+    d0215ps.tuckTabPs = tuckTabPs;  
+    
+    dxf += d0215ps.drw0215psFP1();  
+    
+  } // Drw0215ps
   
   
   protected void drw02xx(double flap, double inrFlap) {

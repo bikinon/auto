@@ -20,8 +20,28 @@ public class Drw0215ps extends dxf12objects {
   public String CUT = "CUT";
   public String CREASE = "CREASE";  
     
+
+  public String drw0215psFP3() {
+    this.absMove(0, this.dotr);
+    Line( this.l1, 0, CUT);
+
+    relMove(this.w2, 0);
+    this.Xaxis = -1;
+    d0215DustInrFlpWebCrn(2);
+    this.Xaxis = 1;
+    relMove(this.w2, 0);
+    
+    d0215TuckPs();
+    relMove(this.l3, 0);
+    
+    d0215DustInrFlpWebCrn(4);
+    
+    return dxf;
+    
+  } // Drw0215ps  
+
   
-  public String drw0215ps() {
+  public String drw0215psFP1() {
     this.absMove(0, this.dotr);
     d0215TuckPs();
     relMove(this.l1, 0);
@@ -67,6 +87,44 @@ public class Drw0215ps extends dxf12objects {
     }
   } // d0215DustInrFlp
   
+  
+    protected void d0215DustInrFlpWebCrn(int panel) {
+   // Start at the Cut Edge Enterance   
+    double panelLen = this.w4;
+    double totFlap = t0215TuckFlap + tuckTabPs;   
+    
+    if (panel == 2) {
+      panelLen = this.w2;
+     // Line(-rightInset, 0, CUT); // We want an Inset on panel 2 
+    } else {
+     // rightInset = 0; // Not required for Panel 4
+    } // if
+    
+    if (totFlap > (this.l3 / 2)) {
+      totFlap = (this.l3 / 2); 
+    } // if
+    
+    relMove(panelLen, 0);
+    if (panel == 2) {
+        Line( -t0215DustInSet, 0, CUT);
+        Line( 0, totFlap, CUT);
+        Line( -(panelLen - t0215DustInSet - t0215sOtr), 0, CUT);
+        relMove( -t0215sOtr, -totFlap);
+            Line(panelLen, panelLen, CREASE); // A start
+            relMove(-panelLen, -panelLen);
+        Line( panelLen - t0215DustInSet, 0, CREASE);
+        relMove( t0215DustInSet, 0);
+    } else {
+        Line( 0, totFlap, CUT);
+        Line( -(panelLen), 0, CUT);
+        relMove( 0, -totFlap);
+            Line(panelLen, panelLen, CREASE); // A start
+            relMove(-panelLen, -panelLen);
+        Line( panelLen, 0, CREASE);
+    }
+  } // d0215DustInrFlpWebCrn
+    
+    
   
   protected void d0215TuckPs_org() {
     // Tuck top with Peel & Seal for Outside seal

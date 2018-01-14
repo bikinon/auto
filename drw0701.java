@@ -56,8 +56,8 @@ public class drw0701 extends dxf12objects {
       // Fully overlapping Auto bottom panel
       double tmpX = this.xabs; // Store Start point top Left of Flap 
       double tmpY = this.yabs;
-      double rad1 = 2;
-      double rad2 = 2.5;
+      double rad1 = this.btmRad;   // LEFT Side (no yet used) - btmRad used as straight both side here
+      double rad2 = this.btmRad * 1.25 ; // RIGHT Side
       // this.btmRad - 
       if (this.btmRad == 2) { // E Flute
           rad1 = 4;
@@ -199,8 +199,8 @@ public class drw0701 extends dxf12objects {
     // Flap outline
 //    this.Line(this.btm45Rad, 0, CUT);
 //    this.Line(0, -this.btmFlap, CUT);
-    double rad1 = 3;
-    double rad2 = 4;
+    double rad1 = btmRad; // Left / FLange side Radius - Very small angle
+    double rad2 = this.btm45Rad * 1.333333; // ' 1/3 due to larger angle
 
     FilletLines oFl = new FilletLines(); // Takes mainly Incremental line values
     oFl.absFlatXstr = this.xabs; // Start Point

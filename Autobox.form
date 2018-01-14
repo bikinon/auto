@@ -221,18 +221,19 @@
     <Component class="javax.swing.JComboBox" name="style">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="11">
-            <StringItem index="0" value="0215+ P&amp;S / Rippa"/>
-            <StringItem index="1" value="Full Overlap P&amp;S / Rippa"/>
-            <StringItem index="2" value="Hammer Head OL"/>
-            <StringItem index="3" value="0200 (Raw Edge)"/>
-            <StringItem index="4" value="0201 (OFOTB)"/>
-            <StringItem index="5" value="0202 (OFO)"/>
-            <StringItem index="6" value="0203 (OFFO)"/>
-            <StringItem index="7" value="0204 (AFM)"/>
-            <StringItem index="8" value="0205 (IFM)"/>
-            <StringItem index="9" value="0206 (IFM / OFFO)"/>
-            <StringItem index="10" value="0209 (Short Top Flap)"/>
+          <StringArray count="12">
+            <StringItem index="0" value="0215+ P&amp;S / Rippa RC"/>
+            <StringItem index="1" value="0215+ P&amp;S / Rippa"/>
+            <StringItem index="2" value="Full Overlap P&amp;S / Rippa"/>
+            <StringItem index="3" value="Hammer Head OL"/>
+            <StringItem index="4" value="0200 (Raw Edge)"/>
+            <StringItem index="5" value="0201 (OFOTB)"/>
+            <StringItem index="6" value="0202 (OFO)"/>
+            <StringItem index="7" value="0203 (OFFO)"/>
+            <StringItem index="8" value="0204 (AFM)"/>
+            <StringItem index="9" value="0205 (IFM)"/>
+            <StringItem index="10" value="0206 (IFM / OFFO)"/>
+            <StringItem index="11" value="0209 (Short Top Flap)"/>
           </StringArray>
         </Property>
       </Properties>

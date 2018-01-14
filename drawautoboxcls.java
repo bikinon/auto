@@ -356,7 +356,7 @@ public class drawautoboxcls extends dxf12objects {
     d0215ps.t0215TuckFlap = t0215TuckFlap;
     d0215ps.tuckTabPs = tuckTabPs;  
     
-    d0215ps.drw0215ps();  
+    d0215ps.drw0215psFP3();  
     
   } // Drw0215ps
   

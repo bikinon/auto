@@ -40,6 +40,11 @@ public class Drw0202HmrHdRC extends dxf12objects {
    protected void drwHH() {
    /* Draw RC version of Hammer Head
     Start at Left side bottom of the flap and draw slit as well as Hammer Head */
+   
+    if ((hmrStrt + tabLen + chmfrAng + bndOfst) > dotr) {         //Make sure Hammerhead not > Depth
+        hmrStrt = dotr - (tabLen + chmfrAng + bndOfst); // bndOfst to give a small gap
+    }
+   
     this.Line(-slitOfst, bndOfst, CUT);
     this.Line(0, topFlap - (bndOfst + hmrWidth), CUT);
     this.relMove(slitOfst, 0);
