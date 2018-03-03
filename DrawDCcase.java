@@ -148,7 +148,7 @@ public class DrawDCcase extends dxf12objects {
     } else if(this.topStyle == "0215+ P&S / Rippa") {
       this.drw0215psFP1();
            
-    } else if(this.topStyle == "Full Overlap") {  // "Full Overlap"
+    } else if(this.topStyle == "Full Overlap P&S / Rippa") {  // "Full Overlap"
       drwOverlapTopFlaps();
       
     } else { 

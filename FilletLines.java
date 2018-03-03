@@ -6,7 +6,7 @@ package auto;
 
 public class FilletLines extends dxf12objects {
 
-    public double absFlatXstr = 0;
+  public double absFlatXstr = 0;
   public double absFlatYstr = 0;
   public double incLineMeetX = 0; 
   public double incLineMeetY = 0; 

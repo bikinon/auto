@@ -119,7 +119,7 @@ public class CalcFlapSz {
        break;
      case "0711":
        break;
-     case "Full Overlap": // Full Overlap with PS
+     case "Full Overlap P&S / Rippa": // Full Overlap with PS
        styleFullOverlapPS(w2);
        break;
      case "Hammer Head OL":
